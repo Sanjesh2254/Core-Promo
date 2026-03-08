@@ -86,7 +86,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "core_promo.install.before_install"
-# after_install = "core_promo.install.after_install"
+after_install = "core_promo.install.after_install.after_install"
+after_migrate = "core_promo.install.after_migrate.after_migrate"
 
 # Uninstallation
 # ------------
@@ -132,13 +133,11 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Task": {
+		"validate": "core_promo.core_promo.customization.task.task.validate",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -249,4 +248,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

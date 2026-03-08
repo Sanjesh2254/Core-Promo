@@ -12,11 +12,11 @@
  "fields": [
   {
    "fieldname": "interaction_metrics",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Interaction Metrics",
-   "options": "\nLike\nRetweet\nComment\nQuote Tweet\nOthers"
+   "options": "Task Type"
   },
   {
    "fieldname": "count",
@@ -30,7 +30,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-08 15:50:16.692990",
+ "modified": "2026-03-08 23:38:09.271411",
  "modified_by": "core@ex.im",
  "module": "Core Promo",
  "name": "Interaction Metrics",
