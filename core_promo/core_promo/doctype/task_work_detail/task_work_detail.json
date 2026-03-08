@@ -6,46 +6,26 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "task_link",
-  "task_type",
+  "task__type",
   "status",
+  "column_break_gwaw",
   "count",
-  "x_link",
   "rate",
   "amount"
  ],
  "fields": [
   {
-   "fieldname": "task_link",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Task Link"
-  },
-  {
-   "fieldname": "task_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Task Type",
-   "options": "Task Type"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Status"
+   "label": "Status",
+   "options": "Pending\nVerified"
   },
   {
    "fieldname": "count",
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Count"
-  },
-  {
-   "fieldname": "x_link",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "X link",
-   "options": "URL"
   },
   {
    "fieldname": "rate",
@@ -58,13 +38,24 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Amount"
+  },
+  {
+   "fieldname": "column_break_gwaw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "task__type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Task  Type",
+   "options": "Task Type"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-08 13:34:15.854980",
+ "modified": "2026-03-08 22:59:45.400072",
  "modified_by": "Administrator",
  "module": "Core Promo",
  "name": "Task Work Detail",
