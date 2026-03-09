@@ -1,7 +1,7 @@
 import frappe
 
 
-def validate(doc, event=None):
+def after_insert(doc, event=None):
 	if doc.subject and doc.custom_interaction_metrics and doc.project:
 		create_task_work_log(doc)
 

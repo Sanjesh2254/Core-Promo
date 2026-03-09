@@ -135,7 +135,7 @@ after_migrate = "core_promo.install.after_migrate.after_migrate"
 
 doc_events = {
 	"Task": {
-		"validate": "core_promo.core_promo.customization.task.task.validate",
+		"after_insert": "core_promo.core_promo.customization.task.task.after_insert",
 	}
 }
 
@@ -248,3 +248,7 @@ doc_events = {
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
+fixtures = [
+	{"doctype": "Custom Field", "filters": [["module", "=", "Core Promo"]]},
+	{"doctype": "Property Setter", "filters": [["module", "=", "Core Promo"]]},
+]
