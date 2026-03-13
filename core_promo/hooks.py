@@ -133,11 +133,11 @@ after_migrate = "core_promo.install.after_migrate.after_migrate"
 # ---------------
 # Hook on document methods and events
 
-doc_events = {
-	"Task": {
-		"after_insert": "core_promo.core_promo.customization.task.task.after_insert",
-	}
-}
+# doc_events = {
+# "Task": {
+# 	"after_insert": "core_promo.core_promo.customization.task.task.after_insert",
+# }
+# }
 
 # Scheduled Tasks
 # ---------------

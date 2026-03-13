@@ -30,7 +30,7 @@ def telegram_webhook():
 
 		# ---- COUNT MESSAGE ----
 		if re.search(r"\d+\s*c", text.lower()):
-			return update_task_counts(text)
+			return update_task_counts(text, sender)
 
 		# ---- OTHER MESSAGES ----
 		return handle_other_messages(text)
@@ -115,7 +115,8 @@ def create_task_from_message(text, chat_title):
 	return {"status": "task_created", "task": task.name}
 
 
-def update_task_counts(text):
+def update_task_counts(text, sender):
+	# Get latest task
 	task = frappe.get_all("Task", order_by="creation desc", limit=1)
 
 	if not task:
@@ -123,19 +124,59 @@ def update_task_counts(text):
 
 	task = frappe.get_doc("Task", task[0].name)
 
-	comment = re.findall(r"(\d+)\s*c", text.lower())
-	rt = re.findall(r"(\d+)\s*rt", text.lower())
+	# -------------------------
+	# Ensure Supplier Exists
+	# -------------------------
+	supplier = frappe.db.exists("Supplier", {"supplier_name": sender})
 
-	if comment:
-		task.append(
-			"custom_interaction_metrics", {"interaction_metrics": "Comment", "count": int(comment[0])}
+	if not supplier:
+		supplier_doc = frappe.get_doc(
+			{"doctype": "Supplier", "supplier_name": sender, "supplier_type": "Individual"}
+		)
+		supplier_doc.insert(ignore_permissions=True)
+		supplier = supplier_doc.name
+	else:
+		supplier = frappe.db.get_value("Supplier", {"supplier_name": sender}, "name")
+
+	# -------------------------
+	# Parse Commands
+	# -------------------------
+	commands = re.findall(r"(\d+)\s*(c|rt|l|qt)", text.lower())
+
+	if not commands:
+		return {"status": "no_valid_command"}
+
+	# -------------------------
+	# Create Work Log
+	# -------------------------
+	work_log = frappe.get_doc(
+		{
+			"doctype": "Task Work Log",
+			"project": task.project,
+			"customer": task.custom_customer,
+			"task": task.name,
+			"supplier": supplier,
+			"task_detail": [],
+		}
+	)
+
+	command_map = {"c": "Comment", "rt": "Retweet", "l": "Like", "qt": "Quote Tweet"}
+
+	for count, cmd in commands:
+		work_log.append(
+			"task_detail",
+			{
+				"task__type": command_map.get(cmd),
+				"status": "Pending",
+				"count": int(count),
+				"rate": 0,
+				"amount": 0,
+			},
 		)
 
-	if rt:
-		task.append("custom_interaction_metrics", {"interaction_metrics": "Retweet", "count": int(rt[0])})
-	task.save(ignore_permissions=True)
+	work_log.insert(ignore_permissions=True)
 
-	return {"status": "updated"}
+	return {"status": "work_log_created", "task": task.name}
 
 
 def handle_other_messages(text):
