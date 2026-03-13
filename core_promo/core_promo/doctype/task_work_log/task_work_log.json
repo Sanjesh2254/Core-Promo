@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "TWL-.YYYY.-.MM.-.DD.-.#####",
  "creation": "2026-03-08 13:20:06.747890",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -79,10 +80,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-08 23:00:41.201294",
+ "modified": "2026-03-12 09:34:13.794947",
  "modified_by": "Administrator",
  "module": "Core Promo",
  "name": "Task Work Log",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
