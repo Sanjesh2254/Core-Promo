@@ -16,7 +16,6 @@ frappe.ui.form.on("Payment Setting", {
                     callback: function(r) {
                         if (r.message) {
                             frappe.msgprint("Purchase Invoice Created: " + r.message);
-                            frappe.set_route("Form", "Purchase Invoice", r.message);
                         }
                     }
                 });

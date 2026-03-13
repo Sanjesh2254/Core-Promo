@@ -8,7 +8,19 @@ BASE_URL = "https://api.x.com/2"
 
 
 class TaskWorkLog(Document):
-	pass
+    def before_save(self):
+        payment = frappe.get_doc('Payment Setting')
+        total_amount=0
+        for row in payment.payment_detail:
+            if row.project == self.project:
+                for task in self.task_detail:
+                    task.rate = row.rate
+                    task.amount=task.rate * task.count
+                    total_amount+= task.amount
+                break
+        self.total_amount=total_amount
+        
+        
 
 @frappe.whitelist(allow_guest=True)
 def check_user_interaction(tweet_id, username):
